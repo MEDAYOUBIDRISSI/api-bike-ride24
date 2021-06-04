@@ -1,12 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Res, HttpStatus, NotFoundException, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Res, HttpStatus, NotFoundException, Put, BadRequestException,Req, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDTO } from '../dto/create-user.dto';
 import { UserserviceService } from '../userservice/userservice.service' 
+import { JwtService } from '@nestjs/jwt';
+import { Response,Request } from 'express'
 
 @Controller('user')
 export class ControllerController {
 
     
-    constructor(private userService:UserserviceService){}
+    constructor(private userService:UserserviceService,private jwtService: JwtService){}
 
     @Post('/create')
     async createPoste(@Res() res,@Body() cretaeUserDTO:CreateUserDTO)
@@ -32,7 +34,7 @@ export class ControllerController {
         )
     }
 
-    @Get('/:UserID')
+    @Get('/edite/:UserID')
     async getUser(@Res() res,@Param('UserID') UserID)
     {
         const User = await this.userService.getUser(UserID)
@@ -59,4 +61,63 @@ export class ControllerController {
             message:'User Updated successfuly',
             UserUpdated});
     }
+
+    @Post('/login')
+    async login(@Body('email') email:string,@Body('password') password:string,@Res({passthrough:true}) response:Response)
+    {
+        const User = await this.userService.findOne({email})
+        
+        if(!User)
+        {
+            throw new BadRequestException('Email Not Existe')
+        }
+        if(password != User.password)
+        {
+            throw new BadRequestException('Password incorect')
+        }
+        const payload = { id: User.id };
+        const jwt = await this.jwtService.signAsync(payload)
+         
+        response.cookie('jwt',jwt,{httpOnly:true})
+
+        return {
+            message:'Connection valide',
+
+        };
+    }
+
+    @Get('/auth/coki')
+    async getCoki(@Req() req:Request)
+    {
+        try{
+            const cookies= req.cookies['jwt']
+
+            const data=await this.jwtService.verifyAsync(cookies)
+
+            if(!data)
+            {
+                throw new UnauthorizedException()
+            }
+
+            const User=await this.userService.findOne({_id:data['id']})
+            return User;
+        }
+        catch(e)
+        {
+            throw new UnauthorizedException()
+        }
+        
+    }
+
+    @Post('/auth/logout')
+    async logout(@Res({passthrough:true}) response:Response)
+    {
+        response.clearCookie('jwt')
+        return {
+            message:"Success"
+        }
+    }
+
+
+    
 }

@@ -34,4 +34,9 @@ export class UserserviceService {
         const deleteUser = await this.userModel.findByIdAndRemove(userID);
         return deleteUser;
     }
+
+    async findOne(condition:any):Promise<User>
+    {
+        return this.userModel.findOne(condition);
+    }
 }
