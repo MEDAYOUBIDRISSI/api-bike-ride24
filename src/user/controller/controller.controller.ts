@@ -82,7 +82,8 @@ export class ControllerController {
 
         return {
             message:'Connection valide',
-
+            jwt,
+            payload
         };
     }
 
@@ -114,10 +115,41 @@ export class ControllerController {
     {
         response.clearCookie('jwt')
         return {
-            message:"Success"
+            message:"Logout success"
         }
     }
 
 
+    @Get('/auth/:UserID')
+    async getUserAuth(@Res() res,@Param('UserID') UserID)
+    {
+        const User = await this.userService.getUser(UserID)
+        if(!User) throw new NotFoundException('User Does not existe');
+        return res.status(HttpStatus.OK).json({User});
+    }   
+
+    @Post('/login/ecommerce')
+    async loginEcommerce(@Body('email') email:string,@Body('nom') nom:string,@Body('prenom') prenom:string,@Body('imgProfile') imgProfile:string,@Res({passthrough:true}) response:Response)
+    {
+        var User = await this.userService.getUserByEmail({email})
+        
+        
+        if(!User)
+        {
+            User = await this.userService.createUser_ecommerce_google(email,nom,prenom,imgProfile)
+        }
+
+        const payload = { id: User.id };
+        const jwt = await this.jwtService.signAsync(payload)
+         
+        response.cookie('jwt',jwt,{httpOnly:true})
+
+        return {
+            message:'Connection valide',
+            jwt,
+            payload
+        };
+       
+    }
     
 }

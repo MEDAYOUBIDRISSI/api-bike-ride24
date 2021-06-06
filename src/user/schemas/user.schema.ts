@@ -20,7 +20,7 @@ export class User {
     @Prop({ default:'null' })
     tel:string;
 
-    @Prop({ default:'null' })
+    @Prop({ default:Date.now })
     dateNaissance:Date;
 
     @Prop({ default:'null' })
@@ -43,6 +43,9 @@ export class User {
 
     @Prop({ default:true })
     etat:boolean;
+
+    @Prop({ default:'null' })
+    imgProfile:string;
 
 }
 

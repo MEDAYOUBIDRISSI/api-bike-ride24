@@ -24,6 +24,16 @@ export class UserserviceService {
         return await User.save();
     }
 
+    async createUser_ecommerce_google(email:string,nom:string,prenom:string,imgProfile:string):Promise<User>{
+        const User = new this.userModel();
+        User.nom=nom
+        User.prenom=prenom
+        User.email=email
+        User.imgProfile=imgProfile
+        User.typeUser="Client"
+        return await User.save();
+    }
+
     async updateUser(userID:string,CreateUserDTO:CreateUserDTO){
         const updateUser = await this.userModel.findByIdAndUpdate(userID,CreateUserDTO,
             {new:true});
@@ -39,4 +49,8 @@ export class UserserviceService {
     {
         return this.userModel.findOne(condition);
     }
+
+    async getUserByEmail(condition:any):Promise<User>{
+        return this.userModel.findOne(condition);
+     }
 }
