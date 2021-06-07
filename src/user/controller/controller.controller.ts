@@ -33,6 +33,70 @@ export class ControllerController {
             }
         )
     }
+    ////////Admins
+    @Get('admin/all')
+    async getAdmins(@Res() res)
+    {
+        const Users = await this.userService.getAdminUsers()
+        return res.status(HttpStatus.OK).json(
+            {
+               message: 'Admins successfuly get',
+               Users
+            }
+        )
+    }
+
+    ////////Livreurs
+    @Get('livreur/all')
+    async getLivreurs(@Res() res)
+    {
+        const Users = await this.userService.getLivreurUsers()
+        return res.status(HttpStatus.OK).json(
+            {
+               message: 'Livreurs successfuly get',
+               Users
+            }
+        )
+    }
+
+    ////////Editeurs
+    @Get('editeur/all')
+    async getEditeurs(@Res() res)
+    {
+        const Users = await this.userService.getEditeurUsers()
+        return res.status(HttpStatus.OK).json(
+            {
+               message: 'Editeurs successfuly get',
+               Users
+            }
+        )
+    }
+
+    ////////Clients
+    @Get('client/all')
+    async getClients(@Res() res)
+    {
+        const Users = await this.userService.getClientUsers()
+        return res.status(HttpStatus.OK).json(
+            {
+               message: 'Clients successfuly get',
+               Users
+            }
+        )
+    }
+
+    ////////Supportr Users
+    @Get('supportuser/all')
+    async getSupportUsers(@Res() res)
+    {
+        const Users = await this.userService.getSupportrUsers()
+        return res.status(HttpStatus.OK).json(
+            {
+               message: 'Support Users successfuly get',
+               Users
+            }
+        )
+    }
 
     @Get('/edite/:UserID')
     async getUser(@Res() res,@Param('UserID') UserID)
@@ -152,4 +216,6 @@ export class ControllerController {
        
     }
     
+
+
 }

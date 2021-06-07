@@ -53,4 +53,33 @@ export class UserserviceService {
     async getUserByEmail(condition:any):Promise<User>{
         return this.userModel.findOne(condition);
      }
+
+     //////////////////////////Admins
+    async getAdminUsers():Promise<User[]>{
+        const users= await this.userModel.find({ typeUser: "Admin" }); 
+        return users;
+     }
+
+      //////////////////////////Editeurs
+    async getEditeurUsers():Promise<User[]>{
+        const users= await this.userModel.find({ typeUser: "Editeur" }); 
+        return users;
+     }
+
+       //////////////////////////Clients
+    async getClientUsers():Promise<User[]>{
+        const users= await this.userModel.find({ typeUser: "Client" }); 
+        return users;
+     }
+
+       //////////////////////////Support-Users
+    async getSupportrUsers():Promise<User[]>{
+        const users= await this.userModel.find({ typeUser: "Support-User" }); 
+        return users;
+     }
+        //////////////////////////Livreur-Users
+    async getLivreurUsers():Promise<User[]>{
+        const users= await this.userModel.find({ typeUser: "Livreur" }); 
+        return users;
+     }
 }

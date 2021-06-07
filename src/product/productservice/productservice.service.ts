@@ -31,7 +31,7 @@ export class ProductserviceService {
 
     async deleteProduct(ProductID:string){
         const deleteProduct = await this.productModel.findByIdAndRemove(ProductID);
-        return deleteProduct;
+        return deleteProduct; 
     }
     //////////////////////////Bicyclette
     async getBicycletteProducts():Promise<Product[]>{
