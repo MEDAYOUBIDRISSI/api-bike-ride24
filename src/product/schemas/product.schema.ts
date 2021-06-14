@@ -11,7 +11,7 @@ import { Image } from "src/feature/image/schemas/image.schema";
 export type ProductDocument = Product & Document;
 
 @Schema({ timestamps: true })
-export class Product {
+export class Product { 
   
     @Prop({ default:'null' })
     libelle: string;

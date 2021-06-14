@@ -32,28 +32,28 @@ export class ControllerController {
     }
 
     @Get('/:productID')
-    async getCategorie(@Res() res,@Param('productID') productID)
+    async getProduct(@Res() res,@Param('productID') productID)
     {
         const product = await this.productService.getProduct(productID)
-        if(!product) throw new NotFoundException('Ctegorie Does not existe');
+        if(!product) throw new NotFoundException('Product Does not existe');
         return res.status(HttpStatus.OK).json({product});
     }    
 
     @Delete('/delete')
-    async deleteCategorie(@Res() res ,@Query('productID') productID)
+    async deleteProduct(@Res() res ,@Query('productID') productID)
     {
         const categorieDeleted = await this.productService.deleteProduct(productID)
-        if(!categorieDeleted) throw new NotFoundException('Ctegorie Does not existe');
+        if(!categorieDeleted) throw new NotFoundException('Product Does not existe');
         return res.status(HttpStatus.OK).json({
             message:'product Deleted successfuly',
             categorieDeleted});
     }
 
     @Put('/update')
-        async updateCategorie(@Res() res ,@Body() createProductDTO:CreateProductDTO,@Query('productID') productID)
+        async updateProduct(@Res() res ,@Body() createProductDTO:CreateProductDTO,@Query('productID') productID)
     {
         const categorieUpdated = await this.productService.updateProduct(productID,createProductDTO)
-        if(!categorieUpdated) throw new NotFoundException('Ctegorie Does not existe');
+        if(!categorieUpdated) throw new NotFoundException('Product Does not existe');
         return res.status(HttpStatus.OK).json({
             message:'product Updated successfuly',
             categorieUpdated});

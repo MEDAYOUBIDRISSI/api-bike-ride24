@@ -4,7 +4,13 @@ import { LigneCommandeServiceService } from '../ligne-commande-service/ligne-com
 import { MongooseModule } from '@nestjs/mongoose';
 import  LigneCommandeSchema  from '../schemas/ligne-commande.schema'
 
-@Module({})
-export class LigneCommandeModule {
-
-}
+@Module({
+    imports:[
+      MongooseModule.forFeature(
+        [{ name: 'LigneCommande', schema: LigneCommandeSchema }]
+      )
+    ],
+    controllers: [ControllerController],
+    providers: [LigneCommandeServiceService]
+  })
+export class LigneCommandeModule {}
