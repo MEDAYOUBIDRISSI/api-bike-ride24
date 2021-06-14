@@ -11,7 +11,7 @@ export class LigneCommandeServiceService {
 
     async getLigneCommandes():Promise<LigneCommande[]>{
         const LigneCommandes= await this.ligneCommandeModel.find(); 
-        return LigneCommandes;
+        return LigneCommandes; 
      }
  
      async getLigneCommande(ligneCommandeID:string):Promise<LigneCommande>{

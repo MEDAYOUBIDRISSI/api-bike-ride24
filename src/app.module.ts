@@ -13,12 +13,11 @@ import { CategorieArticleModule } from './feature/categorie-article/categorie-ar
 import { ArticleModule } from './feature/article/article.module';
 import { ImageModule } from './feature/image/image.module';
 import { CommandeModule } from './commande/commande/commande.module';
-import { ControllerController } from './ligne-commande/controller/controller.controller';
 import { LigneCommandeModule } from './ligne-commande/ligne-commande/ligne-commande.module';
 
 @Module({
   imports: [CategorieModule,MongooseModule.forRoot('mongodb+srv://root:mai2020@cluster0.agexf.mongodb.net/bikeride24?retryWrites=true&w=majority'), ProductModule, UniverModule, MarqueModule, RemiseModule, TageModule, UserModule, CategorieArticleModule, ArticleModule, ImageModule, CommandeModule, LigneCommandeModule],
-  controllers: [AppController, ControllerController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
