@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Res, HttpStat
 import { CreateLigneCommandetDTO } from '../../ligne-commande/dto/create-ligne-commande.dto';
 import { LigneCommandeServiceService } from '../../ligne-commande/ligne-commande-service/ligne-commande-service.service' 
 
-@Controller('lignecommande')
+@Controller('lignecommande') 
 export class ControllerController {
 
     constructor(private LigneCommandeService:LigneCommandeServiceService){}
@@ -10,13 +10,29 @@ export class ControllerController {
     @Post('/create')
     async createPoste(@Res() res,@Body() createLigneCommandetDTO:CreateLigneCommandetDTO)
     {
-        const LigneCommande = await this.LigneCommandeService.createLigneCommande(createLigneCommandetDTO)
-        return res.status(HttpStatus.OK).json(
-            {
-               message: 'LigneCommande successfuly created',
-               LigneCommande:LigneCommande
-            }
-        )
+
+        var LigneCommande = await this.LigneCommandeService.getLigneCommandeByProduct(createLigneCommandetDTO.commande,createLigneCommandetDTO.product)
+
+        if(LigneCommande)
+        {
+            LigneCommande.qte = LigneCommande.qte+createLigneCommandetDTO.qte
+            return res.status(HttpStatus.OK).json(
+                {
+                   message: 'LigneCommande successfuly Add Qte',
+                   LigneCommande
+                }
+            )
+        }
+        else{
+            LigneCommande = await this.LigneCommandeService.createLigneCommande(createLigneCommandetDTO)
+            return res.status(HttpStatus.OK).json(
+                {
+                message: 'LigneCommande successfuly created  Befor add Qte',
+                LigneCommande
+                }
+            )
+        }
+
     }
 
     @Get('/all')
@@ -29,6 +45,14 @@ export class ControllerController {
                ligneCommandes
             }
         )
+    }
+
+    @Get('/bycommande/:commandeID')
+    async getLigneCommandeByCommande(@Res() res,@Param('commandeID') commandeID)
+    {
+        const LigneCommande = await this.LigneCommandeService.getLigneCommandeByCommande(commandeID)
+        if(!LigneCommande) throw new NotFoundException('LigneCommande Does not existe');
+        return res.status(HttpStatus.OK).json({LigneCommande});
     }
 
     @Get('/:ligneCommandeID')

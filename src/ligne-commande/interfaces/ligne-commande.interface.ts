@@ -3,7 +3,7 @@ import { Product } from "src/product/schemas/product.schema";
 
 export interface LigneCommande extends Document{
 
-    readonly qte:number;
+   qte:number;
    readonly product:Product;
    readonly commande:Commande;
 }

@@ -4,7 +4,7 @@ import { Product } from "src/product/schemas/product.schema";
 export class CreateLigneCommandetDTO
 {
 
-   readonly qte:number;
+   qte:number;
    readonly product:Product;
    readonly commande:Commande;
 }

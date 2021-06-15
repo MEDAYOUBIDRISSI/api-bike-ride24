@@ -19,6 +19,11 @@ export class CommandeServiceService {
          return commande;
       }
 
+      async getCommandebyUser(userId:any):Promise<Commande>{
+        const commande= await this.commandeModel.findOne({user:userId,etat:false});
+        return commande;
+     }
+
     async createCommande(createCommandeDTO:CreateCommandeDTO):Promise<Commande>{
         const commande = new this.commandeModel(createCommandeDTO);
         return await commande.save();

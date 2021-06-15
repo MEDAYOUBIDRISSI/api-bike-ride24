@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Res, HttpStatus, NotFoundException, Put } from '@nestjs/common';
 import { CreateCommandeDTO } from '../../commande/dto/create-commande.dto';
-import { CommandeServiceService } from '../../commande/commande-service/commande-service.service' 
+import { CommandeServiceService } from '../../commande/commande-service/commande-service.service'
 
 @Controller('commande')
 export class ControllerController {
@@ -10,17 +10,30 @@ export class ControllerController {
     @Post('/create')
     async createPoste(@Res() res,@Body() createCommandeDTO:CreateCommandeDTO)
     {
-        const commande = await this.CommandeService.createCommande(createCommandeDTO)
-        return res.status(HttpStatus.OK).json(
+        var commandeExiste = await this.CommandeService.getCommandebyUser(createCommandeDTO.user)
+        if(commandeExiste)
+        {
+            return res.status(HttpStatus.OK).json(
+                {
+                   message: 'commandes successfuly get',
+                   commandeExiste
+                }
+            )
+        }
+        else
+        {
+            commandeExiste = await this.CommandeService.createCommande(createCommandeDTO)
+            return res.status(HttpStatus.OK).json(
             {
                message: 'commande successfuly created',
-               commande:commande
+               commandeExiste
             }
-        )
+            )
+        }
     }
 
     @Get('/all')
-    async getProducts(@Res() res)
+    async getCommandes(@Res() res)
     {
         const commandes = await this.CommandeService.getCommandes()
         return res.status(HttpStatus.OK).json(
@@ -31,16 +44,25 @@ export class ControllerController {
         )
     }
 
+    @Get('/byuser/:userID')
+    async getCommandeByUser(@Res() res,@Param('userID') userID)
+    {
+        const commande = await this.CommandeService.getCommandebyUser(userID)
+        if(!commande) throw new NotFoundException('commande Does not existe8');
+        return res.status(HttpStatus.OK).json({commande});
+    }   
+
+
     @Get('/:commandeID')
-    async getCategorie(@Res() res,@Param('commandeID') commandeID)
+    async getCommande(@Res() res,@Param('commandeID') commandeID)
     {
         const commande = await this.CommandeService.getCommande(commandeID)
-        if(!commande) throw new NotFoundException('commande Does not existe');
+        if(!commande) throw new NotFoundException('commande Does not existe6');
         return res.status(HttpStatus.OK).json({commande});
     }    
 
     @Delete('/delete')
-    async deleteCategorie(@Res() res ,@Query('commandeID') commandeID)
+    async deleteCommande(@Res() res ,@Query('commandeID') commandeID)
     {
         const commandeDeleted = await this.CommandeService.deleteCommande(commandeID)
         if(!commandeDeleted) throw new NotFoundException('commande Does not existe');

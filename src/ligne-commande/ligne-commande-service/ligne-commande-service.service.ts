@@ -19,6 +19,16 @@ export class LigneCommandeServiceService {
          return LigneCommande;
       }
 
+      async getLigneCommandeByProduct(CommandeID:any,ProduitID:any):Promise<LigneCommande>{
+        const LigneCommande= await this.ligneCommandeModel.findOne({commande:CommandeID,product:ProduitID})
+        return LigneCommande;
+     }
+
+     async getLigneCommandeByCommande(CommandeID:any):Promise<LigneCommande[]>{
+        const LigneCommande= await this.ligneCommandeModel.find({commande:CommandeID}).populate("commande").populate("product");
+        return LigneCommande;
+     }
+
     async createLigneCommande(createLigneCommandetDTO:CreateLigneCommandetDTO):Promise<LigneCommande>{
         const LigneCommande = new this.ligneCommandeModel(createLigneCommandetDTO);
         return await LigneCommande.save();

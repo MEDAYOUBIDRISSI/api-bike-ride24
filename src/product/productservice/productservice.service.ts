@@ -9,7 +9,7 @@ export class ProductserviceService {
     constructor(@InjectModel('Product') private readonly productModel:Model<Product>){}
 
     async getProducts():Promise<Product[]>{
-        const products= await this.productModel.find(); 
+        const products= await this.productModel.find().populate('categorie').populate('Univer').populate('Marque'); 
         return products;
      }
  
