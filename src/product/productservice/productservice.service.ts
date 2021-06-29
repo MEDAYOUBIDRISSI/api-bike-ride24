@@ -50,4 +50,16 @@ export class ProductserviceService {
         const products= await this.productModel.find({ typeProduct: "AccessoireCycliste" }); 
         return products;
      }
+
+    /////////////////////////Products by Categorie
+    async getProductbyCategorie(categorieID:any):Promise<Product[]>{
+        const products= await this.productModel.find({categorie:categorieID,typeProduct:"Bicyclette"}).populate('categorie').populate('Univer').populate('Marque'); 
+        return products;
+    }
+
+    /////////////////////////Products by Univer
+    async getProductbyUniver(univerID:any):Promise<Product[]>{
+        const products= await this.productModel.find({Univer:univerID,typeProduct:"Bicyclette"}).populate('categorie').populate('Univer').populate('Marque'); 
+        return products;
+    }
 }

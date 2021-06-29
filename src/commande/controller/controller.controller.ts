@@ -32,6 +32,17 @@ export class ControllerController {
         }
     }
 
+    @Put('/update')
+        async updateLigneCommande(@Res() res ,@Body() createCommandeDTO:CreateCommandeDTO,@Query('CommandeID') ligneCommandeID)
+    {
+        createCommandeDTO.etat=true;
+        const commandeUpdated = await this.CommandeService.updateCommande(ligneCommandeID,createCommandeDTO)
+        if(!commandeUpdated) throw new NotFoundException('Commande Does not existe');
+        return res.status(HttpStatus.OK).json({
+            message:'Commande Updated successfuly',
+            commandeUpdated});
+    }
+
     @Get('/all')
     async getCommandes(@Res() res)
     {

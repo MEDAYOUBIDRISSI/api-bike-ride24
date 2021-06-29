@@ -61,7 +61,7 @@ export class ControllerController {
         const LigneCommande = await this.LigneCommandeService.getLigneCommande(ligneCommandeID)
         if(!LigneCommande) throw new NotFoundException('LigneCommande Does not existe');
         return res.status(HttpStatus.OK).json({LigneCommande});
-    }    
+    }     
 
     @Delete('/delete')
     async deleteLigneCommande(@Res() res ,@Query('ligneCommandeID') ligneCommandeID)
@@ -80,6 +80,28 @@ export class ControllerController {
         if(!ligneCommandeUpdated) throw new NotFoundException('LigneCommande Does not existe');
         return res.status(HttpStatus.OK).json({
             message:'LigneCommande Updated successfuly',
+            ligneCommandeUpdated});
+    }
+
+    @Put('/addqte')
+        async AddQteLigneCommande(@Res() res ,@Body() createLigneCommandetDTO:CreateLigneCommandetDTO,@Query('ligneCommandeID') ligneCommandeID)
+    {
+        createLigneCommandetDTO.qte = createLigneCommandetDTO.qte + 1;
+        const ligneCommandeUpdated = await this.LigneCommandeService.updateLigneCommande(ligneCommandeID,createLigneCommandetDTO)
+        if(!ligneCommandeUpdated) throw new NotFoundException('LigneCommande Does not existe');
+        return res.status(HttpStatus.OK).json({
+            message:'LigneCommande Add qte successfuly',
+            ligneCommandeUpdated});
+    }
+
+    @Put('/minusqte')
+        async MinusQteLigneCommande(@Res() res ,@Body() createLigneCommandetDTO:CreateLigneCommandetDTO,@Query('ligneCommandeID') ligneCommandeID)
+    {
+        createLigneCommandetDTO.qte = createLigneCommandetDTO.qte - 1;
+        const ligneCommandeUpdated = await this.LigneCommandeService.updateLigneCommande(ligneCommandeID,createLigneCommandetDTO)
+        if(!ligneCommandeUpdated) throw new NotFoundException('LigneCommande Does not existe');
+        return res.status(HttpStatus.OK).json({
+            message:'LigneCommande Minus qte successfuly',
             ligneCommandeUpdated});
     }
 

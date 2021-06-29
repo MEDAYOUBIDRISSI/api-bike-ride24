@@ -3,6 +3,6 @@ import { User } from "src/user/schemas/user.schema";
 export class CreateCommandeDTO
 {
 
-    readonly etat:boolean;
+    etat:boolean;
     readonly user:User;
 }

@@ -29,6 +29,12 @@ export class CommandeServiceService {
         return await commande.save();
     }
 
+    async updateCommande(CommandeID:string,CreateCommandeDTO:CreateCommandeDTO){
+        const updateCommande = await this.commandeModel.findByIdAndUpdate(CommandeID,CreateCommandeDTO,
+            {new:true});
+        return updateCommande;
+    }
+
     async deleteCommande(commandeID:string){
         const deleteCommande = await this.commandeModel.findByIdAndRemove(commandeID);
         return deleteCommande;

@@ -13,7 +13,7 @@ export class LigneCommandeServiceService {
         const LigneCommandes= await this.ligneCommandeModel.find(); 
         return LigneCommandes; 
      }
- 
+  
      async getLigneCommande(ligneCommandeID:string):Promise<LigneCommande>{
          const LigneCommande= await this.ligneCommandeModel.findById(ligneCommandeID);
          return LigneCommande;
@@ -43,5 +43,17 @@ export class LigneCommandeServiceService {
     async deleteLigneCommande(ligneCommandeID:string){
         const deleteLigneCommande = await this.ligneCommandeModel.findByIdAndRemove(ligneCommandeID);
         return deleteLigneCommande; 
+    }
+
+    async AddQteLigneCommande(ligneCommandeID:string,createLigneCommandetDTO:CreateLigneCommandetDTO){
+        const updateLigneCommande = await this.ligneCommandeModel.findByIdAndUpdate(ligneCommandeID,createLigneCommandetDTO,
+            {new:true});
+        return updateLigneCommande;
+    }
+
+    async MinusQteLigneCommande(ligneCommandeID:string,createLigneCommandetDTO:CreateLigneCommandetDTO){
+        const updateLigneCommande = await this.ligneCommandeModel.findByIdAndUpdate(ligneCommandeID,createLigneCommandetDTO,
+            {new:true});
+        return updateLigneCommande;
     }
 }

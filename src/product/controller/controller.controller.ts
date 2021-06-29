@@ -15,7 +15,7 @@ export class ControllerController {
             {
                message: 'product successfuly created',
                product:product
-            }
+            } 
         )
     }
 
@@ -94,5 +94,21 @@ export class ControllerController {
                products
             }
         )
+    }
+
+    @Get('bikes/byCategorie/:paramID')
+    async getProductbyCategorie(@Res() res,@Param('paramID') paramID)
+    {
+        const products = await this.productService.getProductbyCategorie(paramID)
+        if(!products) throw new NotFoundException('Products Does not existe');
+        return res.status(HttpStatus.OK).json({products});
+    }
+
+    @Get('bikes/byUniver/:paramID')
+    async getProductbyUniver(@Res() res,@Param('paramID') paramID)
+    {
+        const products = await this.productService.getProductbyUniver(paramID)
+        if(!products) throw new NotFoundException('Products Does not existe');
+        return res.status(HttpStatus.OK).json({products});
     }
 }
