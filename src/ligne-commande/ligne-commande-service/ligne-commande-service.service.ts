@@ -56,4 +56,17 @@ export class LigneCommandeServiceService {
             {new:true});
         return updateLigneCommande;
     }
+
+    //Statistic
+    async getProductSolde():Promise<any>{
+        const LigneCommandes= await this.ligneCommandeModel.find(); 
+        const ProductSolde= await this.ligneCommandeModel.aggregate( [
+            { $unwind: LigneCommandes },
+            { $group: {
+                _id: '$_id', 
+                sum: { $sum: "$LigneCommandes.ProductSolde.qte" } 
+            } } 
+        ] );
+        return ProductSolde; 
+     }
 }

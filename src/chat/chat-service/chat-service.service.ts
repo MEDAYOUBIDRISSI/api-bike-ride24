@@ -19,14 +19,14 @@ export class ChatServiceService {
          return Chat;
       }
 
-    //   async getChatByFromUserToUser(CommandeID:any,ProduitID:any):Promise<Chat>{
-    //     const Chat= await this.chatModel.findOne({commande:CommandeID,product:ProduitID})
-    //     return Chat;
-    //  }
+      async getChatByFromUserToUser(FromUserID:any,ToUserID:any):Promise<Chat[]>{
+        const Chats= await this.chatModel.find({$or: [{ fromUser: FromUserID,toUser: ToUserID },{ fromUser: ToUserID,toUser: FromUserID} ]}).populate("toUser").populate("fromUser").sort({ updatedAt : "asc"})
+        return Chats;
+     }
 
      async getChatForInbox(FromUserID:any):Promise<Chat[]>{
-        const Chat= await this.chatModel.find({fromUser:FromUserID}).populate("toUser");
-        return Chat;
+        const Chats= await this.chatModel.find({$or: [{ fromUser: FromUserID }, { toUser: FromUserID }]}).populate("toUser").populate("fromUser").sort({ updatedAt : "desc"})
+        return Chats;
      }
 
     async createChat(createChatdto:CreateChatdto):Promise<Chat>{

@@ -82,4 +82,17 @@ export class ControllerController {
             commandeDeleted});
     }
 
+    //Statistic
+    @Get('/statistic/totalOrders')
+    async getOtalOrders(@Res() res)
+    {
+        const totalOrders = await this.CommandeService.getOtalOrders()
+        return res.status(HttpStatus.OK).json(
+            {
+               message: 'totalOrders successfuly get',
+               totalOrders
+            }
+        )
+    }
+
 }

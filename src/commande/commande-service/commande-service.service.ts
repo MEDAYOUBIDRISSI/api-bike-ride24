@@ -39,4 +39,11 @@ export class CommandeServiceService {
         const deleteCommande = await this.commandeModel.findByIdAndRemove(commandeID);
         return deleteCommande;
     }
+
+    // statistic
+
+    async getOtalOrders():Promise<any>{
+        const totalOrders= await this.commandeModel.where({ 'etat': 'true' }).count();
+        return totalOrders;
+     }
 }

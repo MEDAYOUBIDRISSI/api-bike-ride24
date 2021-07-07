@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UserserviceService } from './user/userservice/userservice.service';
 import { CategorieModule } from './feature/categorie/categorie.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProductModule } from './product/product.module';
@@ -15,9 +16,10 @@ import { ImageModule } from './feature/image/image.module';
 import { CommandeModule } from './commande/commande/commande.module';
 import { LigneCommandeModule } from './ligne-commande/ligne-commande/ligne-commande.module';
 import { ChatModule } from './chat/chat.module';
+import { StatisticModule } from './statistic/statistic/statistic.module';
 
 @Module({
-  imports: [CategorieModule,MongooseModule.forRoot('mongodb+srv://root:mai2020@cluster0.agexf.mongodb.net/bikeride24?retryWrites=true&w=majority'), ProductModule, UniverModule, MarqueModule, RemiseModule, TageModule, UserModule, CategorieArticleModule, ArticleModule, ImageModule, CommandeModule, LigneCommandeModule, ChatModule],
+  imports: [CategorieModule,MongooseModule.forRoot('mongodb+srv://root:mai2020@cluster0.agexf.mongodb.net/bikeride24?retryWrites=true&w=majority'), ProductModule, UniverModule, MarqueModule, RemiseModule, TageModule, UserModule, CategorieArticleModule, ArticleModule, ImageModule, CommandeModule, LigneCommandeModule, ChatModule, StatisticModule],
   controllers: [AppController],
   providers: [AppService],
 })

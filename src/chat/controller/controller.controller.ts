@@ -45,7 +45,15 @@ export class ControllerController {
         const chat = await this.chatService.getChatForInbox(FromUserID)
         if(!chat) throw new NotFoundException('chat Does not existe');
         return res.status(HttpStatus.OK).json({chat});
-    }  
+    }
+    
+    @Get('/inbox/:FromUserID/:ToUserID')
+    async getChatFromUserToUser(@Res() res,@Param('FromUserID') FromUserID,@Param('ToUserID') ToUserID)
+    {
+        const chat = await this.chatService.getChatByFromUserToUser(FromUserID,ToUserID)
+        if(!chat) throw new NotFoundException('chat Does not existe');
+        return res.status(HttpStatus.OK).json({chat});
+    }
 
     @Delete('/delete')
     async deleteChat(@Res() res ,@Query('chatID') chatID)
