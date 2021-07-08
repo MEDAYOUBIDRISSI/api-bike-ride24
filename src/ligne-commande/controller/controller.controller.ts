@@ -105,16 +105,6 @@ export class ControllerController {
             ligneCommandeUpdated});
     }
 
-    @Get('/statistic/productSolde')
-    async getProductSolde(@Res() res)
-    {
-        const ProductSolde = await this.LigneCommandeService.getProductSolde()
-        return res.status(HttpStatus.OK).json(
-            {
-               message: 'ProductSolde successfuly get',
-               ProductSolde
-            }
-        )
-    }
+    
 
 }

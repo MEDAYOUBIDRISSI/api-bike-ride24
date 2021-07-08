@@ -10,7 +10,7 @@ export class LigneCommandeServiceService {
     constructor(@InjectModel('LigneCommande') private readonly ligneCommandeModel:Model<LigneCommande>){}
 
     async getLigneCommandes():Promise<LigneCommande[]>{
-        const LigneCommandes= await this.ligneCommandeModel.find(); 
+        const LigneCommandes= await this.ligneCommandeModel.find().populate("commande").populate("product"); 
         return LigneCommandes; 
      }
   
@@ -57,16 +57,4 @@ export class LigneCommandeServiceService {
         return updateLigneCommande;
     }
 
-    //Statistic
-    async getProductSolde():Promise<any>{
-        const LigneCommandes= await this.ligneCommandeModel.find(); 
-        const ProductSolde= await this.ligneCommandeModel.aggregate( [
-            { $unwind: LigneCommandes },
-            { $group: {
-                _id: '$_id', 
-                sum: { $sum: "$LigneCommandes.ProductSolde.qte" } 
-            } } 
-        ] );
-        return ProductSolde; 
-     }
 }

@@ -40,10 +40,5 @@ export class CommandeServiceService {
         return deleteCommande;
     }
 
-    // statistic
-
-    async getOtalOrders():Promise<any>{
-        const totalOrders= await this.commandeModel.where({ 'etat': 'true' }).count();
-        return totalOrders;
-     }
+    
 }

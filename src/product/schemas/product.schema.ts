@@ -25,13 +25,13 @@ export class Product {
     @Prop({ default:'null' })
     hideline:string;
 
-    @Prop({ default:'null' })
+    @Prop({ default:0 })
     prixAchat:number;
 
-    @Prop({ default:'null' })
+    @Prop({ default:0 })
     prixVent:number;
 
-    @Prop({ default:'null' })
+    @Prop({ default:0 })
     qteStock:number;
 
     @Prop({ default:'null' })
