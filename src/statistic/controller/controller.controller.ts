@@ -102,4 +102,40 @@ export class ControllerController {
         )
     }
 
+    @Get('/BestSellingProduct')
+    async getBestSellingProduct(@Res() res)
+    {
+        const ProductSales = await this.statisticService.getBestSellingProduct()
+        return res.status(HttpStatus.OK).json(
+            {
+               message: 'ProductSales successfuly get',
+               ProductSales
+            }
+        )
+    }
+
+    @Get('/TypeByProduct')
+    async getTypeByProduct(@Res() res)
+    {
+        const ProductByType = await this.statisticService.getTypeByProduct()
+        return res.status(HttpStatus.OK).json(
+            {
+               message: 'getTypeByProduct successfuly get',
+               ProductByType
+            }
+        )
+    }
+
+    @Get('/SalesByUniverOfProduct')
+    async getSalesByUniverOfProduct(@Res() res)
+    {
+        const SalesByUniverOfProduct = await this.statisticService.getSalesByUniverOfProduct()
+        return res.status(HttpStatus.OK).json(
+            {
+               message: 'getSalesByUniverOfProduct successfuly get',
+               SalesByUniverOfProduct
+            }
+        )
+    }
+
 }

@@ -19,6 +19,32 @@ class ProductSale{
         this.value=value
     }
 }
+class ProductSaleByUniver{
+    name:string;
+    value:number=0;
+    univer:string;
+    
+    constructor(name:string,value:number,univer:string)
+    {
+        this.name=name
+        this.value=value
+        this.univer=univer
+    }
+}
+
+class BestProductSale{
+    libelle:string;
+    Total:number=0;
+    ImgProduct:string;
+    prixUnitair:number;
+    constructor(libelle:string,Total:number,ImgProduct:string,prixUnitair:number)
+    {
+        this.libelle=libelle
+        this.Total=Total
+        this.ImgProduct=ImgProduct
+        this.prixUnitair=prixUnitair
+    }
+}
 
 class TopClien{
     email:string;
@@ -122,5 +148,80 @@ export class StatisticServiceService {
         return productSales; 
      }
 
+     async getBestSellingProduct():Promise<any>{
+        var productSales:BestProductSale[] = [] 
+        const LigneCommandes= await this.ligneCommandeModel.find().populate("commande").populate("product"); 
+
+        for(var i = 0; i < LigneCommandes.length; i++)
+        {
+            var ExisteVerification:boolean=false
+            for(var j = 0; j < productSales.length; j++)
+            {
+                   if(LigneCommandes[i].product.libelle == productSales[j].libelle)
+                   {
+                        productSales[j].Total += LigneCommandes[i].qte*LigneCommandes[i].product.prixVent
+                        ExisteVerification=true
+                   }
+            }
+            if(ExisteVerification == false)
+            {
+                var newProduct=new BestProductSale(LigneCommandes[i].product.libelle,LigneCommandes[i].product.prixVent,LigneCommandes[i].product.Image[0],LigneCommandes[i].product.prixVent);
+                productSales.push(newProduct)
+            }
+        }
+        
+        return productSales; 
+     }
+
+
+     async getTypeByProduct():Promise<any>{
+        var productsByType:ProductSale[] = [] 
+        const Product_X= await this.productModel.find(); 
+
+        for(var i = 0; i < Product_X.length; i++)
+        {
+            var ExisteVerification:boolean=false
+            for(var j = 0; j < productsByType.length; j++)
+            {
+                   if(Product_X[i].typeProduct == productsByType[j].name)
+                   {
+                        productsByType[j].value += Product_X[i].qteStock
+                        ExisteVerification=true
+                   }
+            }
+            if(ExisteVerification == false)
+            {
+                var newProduct=new ProductSale(Product_X[i].typeProduct,Product_X[i].qteStock);
+                productsByType.push(newProduct)
+            }
+        }
+        return productsByType; 
+     }
+
+     async getSalesByUniverOfProduct():Promise<any>{
+        var productSales:ProductSaleByUniver[] = [] 
+        const LigneCommandes= await this.ligneCommandeModel.find().populate("commande").populate("product"); 
+
+        for(var i = 0; i < LigneCommandes.length; i++)
+        {
+            var ExisteVerification:boolean=false
+            for(var j = 0; j < productSales.length; j++)
+            {
+                   if(String(LigneCommandes[i].product.Univer+"") == productSales[j].univer)
+                   {
+                        productSales[j].value += LigneCommandes[i].qte*LigneCommandes[i].product.prixVent
+                        ExisteVerification=true
+                   }
+            }
+            if(ExisteVerification == false)
+            {
+                const Univer_X=LigneCommandes[i].product.Univer
+                const ProductByUniver= await this.productModel.findById(LigneCommandes[i].product).populate("Univer");
+                var newProduct=new ProductSaleByUniver(ProductByUniver.Univer.libelle,ProductByUniver.prixVent,String(Univer_X));
+                productSales.push(newProduct)
+            }
+        }
+        return productSales; 
+     }
 
 }
