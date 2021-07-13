@@ -9,7 +9,7 @@ import  CommandeSchema  from '../schemas/commande.schema'
       MongooseModule.forFeature(
         [{ name: 'Commande', schema: CommandeSchema }]
       )
-    ],
+    ], 
     controllers: [ControllerController],
     providers: [CommandeServiceService]
   })
