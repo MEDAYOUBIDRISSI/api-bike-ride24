@@ -9,4 +9,5 @@ export interface Post extends Document{
     usersTag?:User[];
     comments?:{userComment:User,comment:string}[];
     reacteds?:User[];
+    affiliateDrivers?:User[];
 }

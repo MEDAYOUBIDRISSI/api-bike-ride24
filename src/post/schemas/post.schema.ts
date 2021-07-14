@@ -31,7 +31,8 @@ export class Post {
     @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
     reacteds:User[];
 
-    
+    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
+    affiliateDrivers:User[];
 }
 
 const PostSchema = SchemaFactory.createForClass(Post);

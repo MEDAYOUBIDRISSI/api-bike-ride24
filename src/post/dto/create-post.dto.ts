@@ -9,4 +9,5 @@ export class CreatePostDTO
     usersTag?:User[];
     comments?:{userComment:User,comment:string}[];
     reacteds?:User[];
+    affiliateDrivers?:User[];
 }

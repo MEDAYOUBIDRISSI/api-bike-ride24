@@ -20,15 +20,10 @@ export class ControllerController {
     }
 
     @Get('/all')
-    async getPosts(@Res() res)
+    async getPosts()
     {
         const posts = await this.PostService.getPosts()
-        return res.status(HttpStatus.OK).json(
-            {
-               message: 'posts successfuly get',
-               posts
-            }
-        )
+        return posts
     }
 
     @Get('/:postID')
@@ -38,6 +33,16 @@ export class ControllerController {
         if(!post) throw new NotFoundException('post Does not existe6');
         return res.status(HttpStatus.OK).json({post});
     }   
+
+    @Put('/update')
+    async updatePost(@Res() res ,@Body() createPostDTO:CreatePostDTO,@Query('postID') postID)
+{
+    const postUpdated = await this.PostService.updatePost(postID,createPostDTO)
+    if(!postUpdated) throw new NotFoundException('Post Does not existe');
+    return res.status(HttpStatus.OK).json({
+        message:'Post Updated successfuly',
+        postUpdated});
+}
     
 
     @Delete('/delete')
