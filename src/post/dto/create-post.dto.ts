@@ -10,4 +10,12 @@ export class CreatePostDTO
     comments?:{userComment:User,comment:string}[];
     reacteds?:User[];
     affiliateDrivers?:User[];
+    titlePost?:string;
+    from?:string;
+    to?:string;
+    startTripeLat?:number;
+    startTripeLng?:number;
+    endTripeLat?:number;
+    endTripeLng?:number;
+    dateTripe?:string;
 }

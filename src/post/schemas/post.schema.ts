@@ -33,6 +33,30 @@ export class Post {
 
     @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
     affiliateDrivers:User[];
+
+    @Prop({ default:null })
+    titlePost:string;
+
+    @Prop({ default:null })
+    from:string;
+
+    @Prop({ default:null })
+    to:string;
+
+    @Prop({ default:null })
+    startTripeLat:number;
+
+    @Prop({ default:null })
+    startTripeLng:number;
+
+    @Prop({ default:null })
+    endTripeLat:number;
+
+    @Prop({ default:null })
+    endTripeLng:number;
+
+    @Prop({ default:null })
+    dateTripe:string;
 }
 
 const PostSchema = SchemaFactory.createForClass(Post);
