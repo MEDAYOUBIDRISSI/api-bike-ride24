@@ -10,14 +10,16 @@ export class PostServiceService {
     constructor(@InjectModel('Post') private readonly postModel:Model<Post>){}
 
     async getPosts():Promise<Post[]>{
-        const posts= await this.postModel.find().populate("user").populate("usersTag").populate("reacteds").populate("affiliateDrivers").sort({updatedAt: -1}); 
+        const posts= await this.postModel.find().populate("user").populate("usersTag").populate("reacteds").populate("affiliateDrivers").populate("comments").sort({updatedAt: -1}); 
         return posts;
      }
+     
  
      async getPost(PostID:string):Promise<Post>{
          const Post= await this.postModel.findById(PostID);
          return Post;
       }
+      
 
     async createPost(CreatePostDTO:CreatePostDTO):Promise<Post>{
         const Post = new this.postModel(CreatePostDTO);
