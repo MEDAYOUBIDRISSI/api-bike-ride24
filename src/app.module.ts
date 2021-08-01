@@ -18,9 +18,10 @@ import { LigneCommandeModule } from './ligne-commande/ligne-commande/ligne-comma
 import { ChatModule } from './chat/chat.module';
 import { StatisticModule } from './statistic/statistic/statistic.module';
 import { PostModule } from './post/post.module';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
-  imports: [CategorieModule,MongooseModule.forRoot('mongodb+srv://root:mai2020@cluster0.agexf.mongodb.net/bikeride24?retryWrites=true&w=majority'), ProductModule, UniverModule, MarqueModule, RemiseModule, TageModule, UserModule, CategorieArticleModule, ArticleModule, ImageModule, CommandeModule, LigneCommandeModule, ChatModule, StatisticModule, PostModule],
+  imports: [CategorieModule,MongooseModule.forRoot('mongodb+srv://root:mai2020@cluster0.agexf.mongodb.net/bikeride24?retryWrites=true&w=majority'), ProductModule, UniverModule, MarqueModule, RemiseModule, TageModule, UserModule, CategorieArticleModule, ArticleModule, ImageModule, CommandeModule, LigneCommandeModule, ChatModule, StatisticModule, PostModule, CommentModule],
   controllers: [AppController],
   providers: [AppService],
 })

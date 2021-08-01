@@ -24,9 +24,9 @@ export class Post {
     usersTag:User[];
 
     @Prop({
-        type:[{ userComment:{type:mongoose.Schema.Types.ObjectId}, comment:{type:String}}]
+        type:[{ userComment:{type:mongoose.Schema.Types.ObjectId}, comment:{type:String},fullName:{type:String},imgProfile:{type:String}}]
       })
-      comments: { userComment: User, comment: string }[];
+      comments: { userComment: User,fullName:string,imgProfile:string, comment: string }[];
 
     @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
     reacteds:User[];

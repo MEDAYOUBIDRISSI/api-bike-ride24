@@ -7,7 +7,7 @@ export interface Post extends Document{
     Images?:string[];
     user:User;
     usersTag?:User[];
-    comments?:{userComment:User,comment:string}[];
+    comments?:{userComment:User,fullName:string,imgProfile:string,comment:string}[];
     reacteds?:User[];
     affiliateDrivers?:User[];
     titlePost?:string;
