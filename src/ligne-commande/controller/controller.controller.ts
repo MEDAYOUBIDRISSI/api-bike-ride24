@@ -55,6 +55,14 @@ export class ControllerController {
         return res.status(HttpStatus.OK).json({LigneCommande});
     }
 
+    @Get('/byuser/:userID')
+    async getAllLigneCommandesByUser(@Res() res,@Param('userID') userID)
+    {
+        const LigneCommandes = await this.LigneCommandeService.getAllLigneCommandesByUser(userID)
+        if(!LigneCommandes) throw new NotFoundException('LigneCommandes Does not existe');
+        return res.status(HttpStatus.OK).json({LigneCommandes});
+    }
+
     @Get('/:ligneCommandeID')
     async getLigneCommande(@Res() res,@Param('ligneCommandeID') ligneCommandeID)
     {

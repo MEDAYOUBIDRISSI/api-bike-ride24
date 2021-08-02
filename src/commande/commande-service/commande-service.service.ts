@@ -19,7 +19,7 @@ export class CommandeServiceService {
          return commande;
       }
 
-      async getCommandebyUser(userId:any):Promise<Commande>{
+    async getCommandebyUser(userId:any):Promise<Commande>{
         const commande= await this.commandeModel.findOne({user:userId,etat:false});
         return commande;
      }
