@@ -5,6 +5,17 @@ import { LigneCommande } from '../../ligne-commande/interfaces/ligne-commande.in
 import { Commande } from '../../commande/interfaces/commande.interfaces'
 import { CreateLigneCommandetDTO } from '../../ligne-commande/dto/create-ligne-commande.dto';
 
+class CommandeSale{
+    commande:Commande;
+    ligneCommandeTotal:LigneCommande[];
+    
+    constructor(commande:Commande,ligneCommandes:LigneCommande[])
+    {
+        this.commande=commande
+        this.ligneCommandeTotal=ligneCommandes
+    }
+  }
+
 @Injectable()
 export class LigneCommandeServiceService {
 
@@ -16,16 +27,17 @@ export class LigneCommandeServiceService {
         return LigneCommandes; 
     }
 
-    async getAllLigneCommandesByUser(UserID:any,):Promise<LigneCommande[]>{
-        var AllLigneCommandes=[]
-        var LigneCommandes:any
-        const commandes= await this.commandeModel.find({user:UserID}); 
+    async getAllLigneCommandesByUser(UserID:any,):Promise<any[]>{
+        var ListCommandeSale:CommandeSale[] = [] 
+
+        const commandes= await this.commandeModel.find({user:UserID}).populate("user").sort({updatedAt: -1}); 
         for(var i=0;i<commandes.length;i++)
         {
-           LigneCommandes = await this.ligneCommandeModel.find({commande:commandes[i]._id}).populate("commande").populate("product").sort({updatedAt: -1}); 
-           AllLigneCommandes.push(LigneCommandes)
+           const LigneCommandes = await this.ligneCommandeModel.find({commande:commandes[i]}).populate("product").sort({updatedAt: -1}); 
+           var CommandeLigneCommandes=new CommandeSale(commandes[i],LigneCommandes)
+           ListCommandeSale.push(CommandeLigneCommandes)
         }
-        return AllLigneCommandes; 
+        return ListCommandeSale; 
     }
   
      async getLigneCommande(ligneCommandeID:string):Promise<LigneCommande>{
