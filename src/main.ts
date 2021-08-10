@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cookieParser());
   app.enableCors({
-    origin:['http://localhost:4200','http://localhost:50994','http://localhost:59626'],
+    origin:['http://localhost:4200','http://localhost:60363','http://localhost:49437'],
     credentials:true
   })
   app.use(json({ limit: '50mb' }));
