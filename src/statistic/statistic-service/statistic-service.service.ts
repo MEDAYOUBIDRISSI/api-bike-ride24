@@ -8,6 +8,7 @@ import { Commande } from '../../commande/interfaces/commande.interfaces'
 import { Marque } from '../../feature/marque/interfaces/marque.interface'
 import { Univer } from '../../feature/univer/interfaces/univer.interface'
 import { Categorie } from '../../feature/categorie/interfaces/categorie.interface'
+import { Post } from '../../post/interfaces/post.interface'
 
 class ProductSale{
     name:string;
@@ -93,7 +94,7 @@ export class StatisticServiceService {
     constructor(@InjectModel('User') private readonly userModel:Model<User>,@InjectModel('Product') private readonly productModel:Model<Product>,
     @InjectModel('LigneCommande') private readonly ligneCommandeModel:Model<LigneCommande>,@InjectModel('Commande') private readonly commandeModel:Model<Commande>,
     @InjectModel('Categorie') private readonly categorieModel:Model<Categorie>,@InjectModel('Marque') private readonly marqueModel:Model<Marque>,
-    @InjectModel('Univer') private readonly univerModel:Model<Univer>){}
+    @InjectModel('Univer') private readonly univerModel:Model<Univer>,@InjectModel('Post') private readonly postModel:Model<Post>){}
 
     async getTotalOrders():Promise<any>{
         const totalOrders= await this.commandeModel.find().count();
@@ -236,7 +237,7 @@ export class StatisticServiceService {
             var ExisteVerification:boolean=false
             for(var j = 0; j < productSales.length; j++)
             {
-                   if(String(LigneCommandes[i].product.Univer+"") == productSales[j].univer)
+                   if(String(LigneCommandes[i].product?.Univer+"") == productSales[j].univer)
                    {
                         productSales[j].value += LigneCommandes[i].qte*LigneCommandes[i].product.prixVent
                         ExisteVerification=true
@@ -319,4 +320,28 @@ export class StatisticServiceService {
         const size = 10
         return productSales.slice(0, size);
      } 
+
+     async getTopPlayers():Promise<any>{
+        var ListClients:User[] = [] 
+        const posts= await this.postModel.find().populate("user"); 
+
+        for(var i = 0; i < posts.length; i++)
+        {
+            var ExisteVerification:boolean=false
+            for(var j = 0; j < ListClients.length; j++)
+            {
+                   if(posts[i].user.email == ListClients[j].email)
+                   {
+                        ExisteVerification=true
+                   }
+            }
+            
+            if(ExisteVerification == false)
+            {
+                const NewUser= await this.userModel.findById(posts[i].user);
+                ListClients.push(NewUser)
+            }
+        }
+        return ListClients; 
+     }
 }
