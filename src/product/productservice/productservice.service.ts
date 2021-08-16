@@ -62,4 +62,26 @@ export class ProductserviceService {
         const products= await this.productModel.find({Univer:univerID,typeProduct:"Bicyclette"}).populate('categorie').populate('Univer').populate('Marque'); 
         return products;
     }
+
+    //////////////////////////AccessoireVeloByCategorie
+    async getAccessoireVeloProductsByCategorie(categorieID:any):Promise<Product[]>{
+        const products= await this.productModel.find({ categorie:categorieID,typeProduct: "AccessoireVelo" }).populate('Marque').populate('categorie'); 
+        return products;
+     }
+
+    //////////////////////////AccessoireCyclistByCategorie
+    async getAccessoireCyclisteProductsByCategorie(categorieID:any):Promise<Product[]>{
+        const products= await this.productModel.find({ categorie:categorieID,typeProduct: "AccessoireCycliste" }).populate('Marque').populate('categorie'); 
+        return products;
+    }
+    /////////////////////////Accessoire by Marque
+    async getAccessoirebyMarque(marqueID:any):Promise<Product[]>{
+        const products= await this.productModel.find({$or: [{ Marque:marqueID,typeProduct: 'AccessoireVelo' }, { Marque:marqueID,typeProduct: 'AccessoireCycliste' }]}).populate('categorie').populate('Univer').populate('Marque'); 
+        return products;
+    }
+    /////////////////////////Bike by Marque
+    async getBikebyMarque(marqueID:any):Promise<Product[]>{
+        const products= await this.productModel.find({Marque:marqueID,typeProduct:"Bicyclette"}).populate('categorie').populate('Univer').populate('Marque'); 
+        return products;
+    }
 }

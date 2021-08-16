@@ -111,4 +111,36 @@ export class ControllerController {
         if(!products) throw new NotFoundException('Products Does not existe');
         return res.status(HttpStatus.OK).json({products});
     }
+
+    @Get('accessoirecycliste/byCategorie/:paramID')
+    async getaccessoirecyclistebyCategorie(@Res() res,@Param('paramID') paramID)
+    {
+        const products = await this.productService.getAccessoireCyclisteProductsByCategorie(paramID)
+        if(!products) throw new NotFoundException('Products Does not existe');
+        return res.status(HttpStatus.OK).json({products});
+    }
+
+    @Get('accessoirevelo/byCategorie/:paramID')
+    async getaccessoirevelobyCategorie(@Res() res,@Param('paramID') paramID)
+    {
+        const products = await this.productService.getAccessoireVeloProductsByCategorie(paramID)
+        if(!products) throw new NotFoundException('Products Does not existe');
+        return res.status(HttpStatus.OK).json({products});
+    }
+
+    @Get('bikes/byMarque/:paramID')
+    async getBikebyMarque(@Res() res,@Param('paramID') paramID)
+    {
+        const products = await this.productService.getBikebyMarque(paramID)
+        if(!products) throw new NotFoundException('Products Does not existe');
+        return res.status(HttpStatus.OK).json({products});
+    }
+
+    @Get('accessoire/byMarque/:paramID')
+    async getAccessoirebyMarque(@Res() res,@Param('paramID') paramID)
+    {
+        const products = await this.productService.getAccessoirebyMarque(paramID)
+        if(!products) throw new NotFoundException('Products Does not existe');
+        return res.status(HttpStatus.OK).json({products});
+    }
 }

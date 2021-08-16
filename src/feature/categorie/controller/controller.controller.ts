@@ -31,6 +31,40 @@ export class ControllerController {
         )
     }
 
+    @Get('/categorieOfBike/all')
+    async getCategoriesOfBike(@Res() res)
+    {
+        const categories = await this.categorieService.getCategoriesOfBike()
+        return res.status(HttpStatus.OK).json(
+            {
+               message: 'Categories successfuly get',
+               categories
+            }
+        )
+    }
+    @Get('/categorieOfAccessoiresOfBike/all')
+    async getCategoriesOfAccessoiresOfBike(@Res() res)
+    {
+        const categories = await this.categorieService.getCategoriesOfAccessoiresOfBike()
+        return res.status(HttpStatus.OK).json(
+            {
+               message: 'Categories successfuly get',
+               categories
+            }
+        )
+    }
+    @Get('/categorieOfAccessoiresOfBikers/all')
+    async getCategoriesOfAccessoiresOfBikers(@Res() res)
+    {
+        const categories = await this.categorieService.getCategoriesOfAccessoiresOfBikers()
+        return res.status(HttpStatus.OK).json(
+            {
+               message: 'Categories successfuly get',
+               categories
+            }
+        )
+    }
+
     @Get('/:categorieID')
     async getCategorie(@Res() res,@Param('categorieID') categorieID)
     {

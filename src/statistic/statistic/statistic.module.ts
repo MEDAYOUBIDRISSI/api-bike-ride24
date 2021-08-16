@@ -10,7 +10,7 @@ import  MarqueSchema  from '../../feature/marque/schemas/marque.schema'
 import  UniverSchema  from '../../feature/univer/schemas/univer.schema'
 import  CategorieSchema  from '../../feature/categorie/schemas/categorie.schema'
 
-@Module({
+@Module({ 
     imports:[
       MongooseModule.forFeature(
         [{ name: 'Commande', schema: CommandeSchema },{ name: 'LigneCommande', schema: LigneCommandeSchema },

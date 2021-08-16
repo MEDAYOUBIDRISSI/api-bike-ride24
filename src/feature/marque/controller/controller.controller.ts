@@ -59,4 +59,27 @@ export class ControllerController {
             message:'Marque Updated successfuly',
             MarqueUpdated});
     }
+
+    @Get('/marquesOfBike/all')
+    async getMarquesOfBike(@Res() res)
+    {
+        const Marques = await this.marqueService.getMarquesOfBike()
+        return res.status(HttpStatus.OK).json(
+            {
+               message: 'Marques successfuly get',
+               Marques
+            }
+        )
+    }
+    @Get('/marquesOfAccessoires/all')
+    async getMarquesOfAccessoires(@Res() res)
+    {
+        const Marques = await this.marqueService.getMarquesOfAccessoires()
+        return res.status(HttpStatus.OK).json(
+            {
+               message: 'Marques successfuly get',
+               Marques
+            }
+        )
+    }
 }
