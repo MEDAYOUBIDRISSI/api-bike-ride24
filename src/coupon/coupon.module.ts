@@ -9,7 +9,7 @@ import  CouponSchema  from './schemas/coupon.schema'
     MongooseModule.forFeature(
       [{ name: 'Coupon', schema: CouponSchema }]
     )
-  ], 
+  ],  
   controllers: [ControllerController],
   providers: [CouponServiceService]
 })

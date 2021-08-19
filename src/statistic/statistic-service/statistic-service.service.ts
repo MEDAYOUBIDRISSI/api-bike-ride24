@@ -61,6 +61,19 @@ class TopClien{
         this.user=user
     }
 }
+interface series{
+    name:string;
+    value:number;
+}
+class productSalesMulti {
+    name:string;
+    value:series[];
+    constructor(name:string,value:series[])
+    {
+        this.name=name;
+        this.value=value;
+    }
+}
 
 @Injectable()
 export class StatisticServiceService {
@@ -120,7 +133,9 @@ export class StatisticServiceService {
                 ListClients.push(newClient)
             }
         }
-        return ListClients; 
+        ListClients = ListClients.sort((low, high) => high.TotalSale - low.TotalSale)
+        const size = 10
+        return ListClients.slice(0, size); 
      }
 
      async getProductSales():Promise<any>{
@@ -169,9 +184,11 @@ export class StatisticServiceService {
                 productSales.push(newProduct)
             }
         }
-        
-        return productSales; 
-     }
+
+        productSales = productSales.sort((low, high) => high.Total - low.Total)
+        const size = 10
+        return productSales.slice(0, size);
+     } 
 
 
      async getTypeByProduct():Promise<any>{
@@ -222,6 +239,45 @@ export class StatisticServiceService {
             }
         }
         return productSales; 
+     }
+
+     async getproductSalesMulti():Promise<any>{
+        // var productSales:productSalesMulti[] = [] 
+        // const LigneCommandes= await this.ligneCommandeModel.find().populate("commande").populate("product"); 
+
+        var  months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        
+        // for(var i = 0; i < LigneCommandes.length; i++)
+        // {
+        //     // var ExisteVerification:boolean=false
+        //     // for(var j = 0; j < productSales.length; j++)
+        //     // {
+        //     //        if(LigneCommandes[i].product.libelle == productSales[j].name)
+        //     //        {
+        //     //             for(var m = 0; m < productSales[j].value.length; m++)
+        //     //             {
+        //     //                 var d:Date
+        //     //                 d=LigneCommandes[i].commande.updatedAt
+        //     //                 var monthName=months[d.getMonth()];
+        //     //                 if(monthName == productSales[j].value[m])
+        //     //                 {
+                                
+        //     //                 }
+        //     //             }
+        //     //        }
+        //     // }
+        //     // if(ExisteVerification == false)
+        //     // {
+        //     //     const Univer_X=LigneCommandes[i].product.Univer
+        //     //     const ProductByUniver= await this.productModel.findById(LigneCommandes[i].product).populate("Univer");
+        //     //     var newProduct=new productSalesMulti(ProductByUniver.Univer.libelle,ProductByUniver.prixVent,String(Univer_X));
+        //     //     productSales.push(newProduct)
+        //     // }
+        // }
+        var d = new Date();
+        var monthName=months[d.getMonth()];
+        return monthName; 
+        
      }
 
 }

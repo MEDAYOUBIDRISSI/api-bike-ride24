@@ -138,4 +138,16 @@ export class ControllerController {
         )
     }
 
+    @Get('/SalesProductMulti')
+    async getSalesProductMulti(@Res() res)
+    {
+        const SalesProductMulti = await this.statisticService.getproductSalesMulti()
+        return res.status(HttpStatus.OK).json(
+            {
+               message: 'getproductSalesMulti successfuly get',
+               SalesProductMulti
+            }
+        )
+    }
+
 }
