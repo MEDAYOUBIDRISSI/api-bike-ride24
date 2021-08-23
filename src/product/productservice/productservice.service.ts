@@ -14,7 +14,7 @@ export class ProductserviceService {
      }
  
      async getProduct(productID:string):Promise<Product>{
-         const product= await this.productModel.findById(productID);
+         const product= await this.productModel.findById(productID).populate('categorie').populate('Univer').populate('Marque');
          return product;
       }
 
@@ -35,19 +35,19 @@ export class ProductserviceService {
     }
     //////////////////////////Bicyclette
     async getBicycletteProducts():Promise<Product[]>{
-        const products= await this.productModel.find({ typeProduct: "Bicyclette" }); 
+        const products= await this.productModel.find({ typeProduct: "Bicyclette" }).populate('categorie').populate('Univer').populate('Marque'); 
         return products;
      }
 
     //////////////////////////AccessoireVelo
     async getAccessoireVeloProducts():Promise<Product[]>{
-        const products= await this.productModel.find({ typeProduct: "AccessoireVelo" }); 
+        const products= await this.productModel.find({ typeProduct: "AccessoireVelo" }).populate('categorie').populate('Univer').populate('Marque'); 
         return products;
      }
 
     //////////////////////////AccessoireVelo
     async getAccessoireCyclisteProducts():Promise<Product[]>{
-        const products= await this.productModel.find({ typeProduct: "AccessoireCycliste" }); 
+        const products= await this.productModel.find({ typeProduct: "AccessoireCycliste" }).populate('categorie').populate('Univer').populate('Marque'); 
         return products;
      }
 
@@ -82,6 +82,28 @@ export class ProductserviceService {
     /////////////////////////Bike by Marque
     async getBikebyMarque(marqueID:any):Promise<Product[]>{
         const products= await this.productModel.find({Marque:marqueID,typeProduct:"Bicyclette"}).populate('categorie').populate('Univer').populate('Marque'); 
+        return products;
+    }
+
+     /////////////////////////Searche
+     async getProductBySearche(MotsCles:any,Type:any):Promise<Product[]>{
+        var products:Product[] = []
+         if(Type=="Bicyclette" || Type=="AccessoireCycliste" || Type=="AccessoireVelo")
+         {
+            products= await this.productModel.find({typeProduct:Type,
+                                $or: [{ libelle:{ $regex: '.*' + MotsCles + '.*' }},
+                                {hideline:{ $regex: '.*' + MotsCles + '.*' }},
+                                {description:{ $regex: '.*' + MotsCles + '.*' }}]})
+                                .populate('categorie').populate('Univer').populate('Marque');
+         }
+         else
+         {
+            products= await this.productModel.find({$or: [{ libelle:{ $regex: '.*' + MotsCles + '.*' }},
+                                {hideline:{ $regex: '.*' + MotsCles + '.*' }},
+                                {description:{ $regex: '.*' + MotsCles + '.*' }}]})
+                                .populate('categorie').populate('Univer').populate('Marque');
+         }
+         
         return products;
     }
 }

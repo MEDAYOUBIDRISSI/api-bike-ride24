@@ -143,4 +143,12 @@ export class ControllerController {
         if(!products) throw new NotFoundException('Products Does not existe');
         return res.status(HttpStatus.OK).json({products});
     }
+
+    @Get('searche/:MotsCles/:Type')
+    async getProductBySearche(@Res() res,@Param('MotsCles') MotsCles,@Param('Type') Type)
+    {
+        const products = await this.productService.getProductBySearche(MotsCles,Type)
+        if(!products) throw new NotFoundException('Products Does not existe');
+        return res.status(HttpStatus.OK).json({products});
+    }
 }
