@@ -13,16 +13,16 @@ export type ProductDocument = Product & Document;
 @Schema({ timestamps: true })
 export class Product { 
   
-    @Prop({ default:'null' })
+    @Prop({ default:'' })
     libelle: string;
 
-    @Prop({ default:'null' })
+    @Prop({ default:'' })
     description: string;
 
-    @Prop({ default:'null' })
+    @Prop({ default:'' })
     codeBare:string;
 
-    @Prop({ default:'null' })
+    @Prop({ default:'' })
     hideline:string;
 
     @Prop({ default:0 })
@@ -34,35 +34,35 @@ export class Product {
     @Prop({ default:0 })
     qteStock:number;
 
-    @Prop({ default:'null' })
+    @Prop({ default:'' })
     anneModel:string;
 
-    @Prop({ default:'null' })
+    @Prop({ default:'' })
     etat:boolean;
 
-    @Prop({ default:'null' })
+    @Prop({ default:'' })
     typeProduct:string;
 
-    @Prop({ default:'null' })
+    @Prop({ default:'' })
     tailleRue:string;
 
-    @Prop({ default:'null' })
+    @Prop({ default:'' })
     nombreDengrenages:string;
 
-    @Prop({ default:'null' })
+    @Prop({ default:'' })
     materiau_du_cadre:string;
 
-    @Prop({ default:'null' })
+    @Prop({ default:'' })
     materiau_de_lafourche:string;
 
-    @Prop({ default:'null' })
+    @Prop({ default:'' })
     freins:string;
 
     @Prop({type: mongoose.Schema.Types.ObjectId, ref: "Categorie",autopopulate: { maxDepth: 1 }})
     categorie:Categorie;
 
-    @Prop([{type: mongoose.Schema.Types.ObjectId, ref: "Tage",autopopulate: { maxDepth: 1 }}])
-    Tage:Tage[];
+    @Prop({ default:'' })
+    Tage:string[];
 
     @Prop({type: mongoose.Schema.Types.ObjectId, ref: "Remise",autopopulate: { maxDepth: 1 }})
     Remise:Remise;

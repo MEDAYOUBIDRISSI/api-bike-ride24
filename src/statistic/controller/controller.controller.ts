@@ -150,4 +150,16 @@ export class ControllerController {
         )
     }
 
+    @Get('/ProductSalesForPublication')
+    async getProductSalesForPublication(@Res() res)
+    {
+        const ProductSales = await this.statisticService.getTopProductForPublication()
+        return res.status(HttpStatus.OK).json(
+            {
+               message: 'ProductSales successfuly get',
+               ProductSales
+            }
+        )
+    }
+
 }

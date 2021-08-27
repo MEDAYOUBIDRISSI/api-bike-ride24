@@ -35,19 +35,19 @@ export class ProductserviceService {
     }
     //////////////////////////Bicyclette
     async getBicycletteProducts():Promise<Product[]>{
-        const products= await this.productModel.find({ typeProduct: "Bicyclette" }).populate('categorie').populate('Univer').populate('Marque'); 
+        const products= await this.productModel.find({ typeProduct: "Bicyclette" }).populate('categorie').populate('Univer').populate('Marque').populate('Remise'); 
         return products;
      }
 
     //////////////////////////AccessoireVelo
     async getAccessoireVeloProducts():Promise<Product[]>{
-        const products= await this.productModel.find({ typeProduct: "AccessoireVelo" }).populate('categorie').populate('Univer').populate('Marque'); 
+        const products= await this.productModel.find({ typeProduct: "AccessoireVelo" }).populate('categorie').populate('Univer').populate('Marque').populate('Remise'); 
         return products;
      }
 
     //////////////////////////AccessoireVelo
     async getAccessoireCyclisteProducts():Promise<Product[]>{
-        const products= await this.productModel.find({ typeProduct: "AccessoireCycliste" }).populate('categorie').populate('Univer').populate('Marque'); 
+        const products= await this.productModel.find({ typeProduct: "AccessoireCycliste" }).populate('categorie').populate('Univer').populate('Marque').populate('Remise'); 
         return products;
      }
 

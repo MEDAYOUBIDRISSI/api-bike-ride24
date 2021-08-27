@@ -75,6 +75,18 @@ class productSalesMulti {
     }
 }
 
+class ToptProductSaleForPublication{
+    Product:Product;
+    libelle:string;
+    Total:number=0;
+    constructor(Product:Product,libelle:string,Total:number)
+    {
+        this.Product=Product
+        this.libelle=libelle
+        this.Total=Total
+    }
+}
+
 @Injectable()
 export class StatisticServiceService {
 
@@ -277,7 +289,34 @@ export class StatisticServiceService {
         var d = new Date();
         var monthName=months[d.getMonth()];
         return monthName; 
-        
      }
 
+
+     async getTopProductForPublication():Promise<any>{
+        var productSales:ToptProductSaleForPublication[] = [] 
+        const LigneCommandes= await this.ligneCommandeModel.find().populate("commande").populate("product"); 
+
+        for(var i = 0; i < LigneCommandes.length; i++)
+        {
+            var ExisteVerification:boolean=false
+            for(var j = 0; j < productSales.length; j++)
+            {
+                   if(LigneCommandes[i].product.libelle == productSales[j].libelle)
+                   {
+                        productSales[j].Total += LigneCommandes[i].qte*LigneCommandes[i].product.prixVent
+                        ExisteVerification=true
+                   }
+            }
+            if(ExisteVerification == false)
+            {
+                const Product= await this.productModel.findById(LigneCommandes[i].product);
+                var newProduct=new ToptProductSaleForPublication(Product,LigneCommandes[i].product.libelle,LigneCommandes[i].product.prixVent);
+                productSales.push(newProduct)
+            }
+        }
+
+        productSales = productSales.sort((low, high) => high.Total - low.Total)
+        const size = 10
+        return productSales.slice(0, size);
+     } 
 }

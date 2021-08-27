@@ -23,7 +23,7 @@ export interface Product extends Document{
    readonly materiau_de_lafourche:string;
    readonly freins:string;
    readonly categorie:Categorie;
-   readonly Tage:Tage[];
+   readonly Tage:string[];
    readonly Remise:Remise;
    readonly Marque:Marque;
    readonly Univer:Univer;
